@@ -42,23 +42,23 @@ jobs:
         run: |
           mvn failsafe:integration-test failsafe:verify
 
-    qa:
-      needs: test
-      runs-on: self-hosted
-      continue-on-error: true
-      steps:
-        - name: Set up JDK 17 for SonarQube Analysis
-          uses: actions/setup-java@v2
-          with:
-            java-version: "17"
-            distribution: "adopt"
-        - name: Set up Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: "14"
-        - name: calidad-codigo
-          run: |
-            mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
+  qa:
+    needs: test
+    runs-on: self-hosted
+    continue-on-error: true
+    steps:
+      - name: Set up JDK 17 for SonarQube Analysis
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "adopt"
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "14"
+      - name: calidad-codigo
+        run: |
+          mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
 
   deploy:
     needs: qa
