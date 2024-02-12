@@ -47,6 +47,11 @@ jobs:
     runs-on: self-hosted
     continue-on-error: true
     steps:
+      - name: Set up JDK 17 for SonarQube Analysis
+        uses: actions/setup-java@v2
+        with:
+          java-version: "17"
+          distribution: "adopt"
       - name: calidad-codigo
         run: |
           mvn sonar:sonar -Dsonar.host.url=http://sonarqube:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
